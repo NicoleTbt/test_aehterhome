@@ -9,11 +9,11 @@ import MessageScreen from '../screens/MessageScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 // import tab icons
-const HomeIcon = require('../assets/home.png');
-const ProfileIcon = require('../assets/user.png');
-const SceneIcon = require('../assets/scene.png');
-const MessageIcon = require('../assets/message.png');
-const InsightIcon = require('../assets/insight.png');
+const HomeIcon = require('../assets/png/home.png');
+const ProfileIcon = require('../assets/png/user.png');
+const SceneIcon = require('../assets/png/scene.png');
+const MessageIcon = require('../assets/png/message.png');
+const InsightIcon = require('../assets/png/insight.png');
 
 export const mainTabRoutes: {
   label: string;
