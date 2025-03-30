@@ -28,9 +28,12 @@ export const homeStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  select_location_icon: {
+  selectLocationIcon: {
     width: 15,
     height: 15,
+  },
+  selectLocationIconRotate: {
+    transform: [{rotate: '180deg'}],
   },
   locationListContainer: {
     position: 'absolute',

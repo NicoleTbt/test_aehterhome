@@ -4,13 +4,13 @@ import Modal from 'react-native-modal';
 import {homeStyles} from './homeStyles';
 import {ILocation, IDevices, IRoom} from './homeDataInterfaces';
 
-const select_location_icon = require('../../assets/select-location.png');
-const add_device = require('../../assets/add-device.png');
-const grid_icon = require('../../assets/grid.png');
-const more_icon = require('../../assets/more.png');
-const online_icon = require('../../assets/connected.png');
-const offline_icon = require('../../assets/offline.png');
-const offline_i_icon = require('../../assets/offline-i.png');
+const select_location_icon = require('../../assets/png/select-location.png');
+const add_device = require('../../assets/png/add-device.png');
+const grid_icon = require('../../assets/png/grid.png');
+const more_icon = require('../../assets/png/more.png');
+const online_icon = require('../../assets/png/connected.png');
+const offline_icon = require('../../assets/png/offline.png');
+const offline_i_icon = require('../../assets/png/offline-i.png');
 
 //Import temporary data
 import {
@@ -52,25 +52,21 @@ const Header = ({
             {locationSelected?.label || ''}
           </Text>
 
-          {openLocationList ? (
-            <TouchableOpacity
-              onPress={() => setOpenLocationList(false)}
-              style={homeStyles.selectLocationArea}>
-              <Image
-                source={select_location_icon}
-                style={homeStyles.select_location_icon}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={homeStyles.selectLocationArea}
-              onPress={() => setOpenLocationList(true)}>
-              <Image
-                source={select_location_icon}
-                style={homeStyles.select_location_icon}
-              />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            onPress={
+              openLocationList
+                ? () => setOpenLocationList(false)
+                : () => setOpenLocationList(true)
+            }
+            style={homeStyles.selectLocationArea}>
+            <Image
+              source={select_location_icon}
+              style={[
+                homeStyles.selectLocationIcon,
+                openLocationList ? homeStyles.selectLocationIconRotate : '',
+              ]}
+            />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => setOpenAddModal(true)}>
           <Image source={add_device} style={homeStyles.add_device} />
@@ -80,7 +76,10 @@ const Header = ({
         <View style={homeStyles.locationListContainer}>
           {location?.map((location, index) => (
             <TouchableOpacity
-              onPress={() => handleSelectLocation(location)}
+              onPress={() => {
+                handleSelectLocation(location);
+                setOpenLocationList(false);
+              }}
               style={homeStyles.locationListItem}
               key={index}>
               <Text style={homeStyles.locationListText}>{location.label}</Text>
@@ -269,9 +268,10 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    //we consider that we have a GET api for the devices data
-    //currently no change in devices data will happen
+    //we consider that we have a GET api for the devices data based on the location selected
+    //currently no change in devices data will happen we will always set the Home location data
     setDevices(selected_location_devices);
+    setRoomSelectedId(0);
   }, [locationSelected]);
 
   useEffect(() => {
